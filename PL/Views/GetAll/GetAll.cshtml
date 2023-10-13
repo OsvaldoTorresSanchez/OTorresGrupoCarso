@@ -1,0 +1,201 @@
+﻿@model ML.Pokemon
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>GetAll</h2>
+<body>
+    <div class="row">
+        <div class="col-md-12 ">
+            <button type="button" id="btn-1" onclick="mostrarBoton1()" class="btn btn-info bi bi-search"> Busqueda</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <input type="text" class="form-control" , placeholder="Nombre" , id="myFilter" , style="display: none; width: 250px; height: 38px;" onkeyup="myFunction()">
+
+            <button type="submit" class="btn btn-info bi bi-search " id="btnCargar" style="display: none"> </button>
+        </div>
+    </div>
+
+    <br />
+    <div class="container" id="pokemons">
+        <div class="row">
+            @foreach (ML.Pokemon popular in Model.Pokemons)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="container-card">
+                        <div class="card">
+                            <a href="" target="_blank">
+                                <img class="dribbble-link" src="@popular.imagen" style="width: 250px; height: 250px;">
+                            </a>
+                            <div class="contenido-card">
+                                <h3 class="card-title"> @popular.Id @popular.name</h3>
+
+                                <p>Tipo de Pokemon</p>
+
+                                <a href=" @Url.Action("Busqueda", "GetAll", new {Id = popular.Id})">Leer Màs</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+
+@*Estilos*@
+
+<style>
+
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #1C1A30;
+        /*background-color: #353B3F;*/
+        /*background: #5c746a;*/
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    h2 {
+        color: white;
+    }
+    /*Cards*/
+    .container-card {
+        width: 100%;
+        display: flex;
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    .title-cards {
+        width: 100%;
+        max-width: 1080px;
+        margin: auto;
+        padding: 20px;
+        margin-top: 20px;
+        text-align: center;
+        color: #7a7a7a;
+    }
+
+    .card {
+        width: 100%;
+        margin: 20px;
+        border-radius: 6px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+        transition: all 400ms ease-out;
+        cursor: default;
+    }
+
+        .card:hover {
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+            transform: translateY(-3%);
+        }
+
+        .card img {
+            width: 100%;
+            height: 210px;
+        }
+
+        .card .contenido-card {
+            padding: 15px;
+            text-align: center;
+        }
+
+            .card .contenido-card h3 {
+                margin-bottom: 15px;
+                color: #7a7a7a;
+            }
+
+            .card .contenido-card p {
+                line-height: 1.8;
+                color: #6a6a6a;
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+
+            .card .contenido-card a {
+                display: inline-block;
+                padding: 10px;
+                margin-top: 10px;
+                text-decoration: none;
+                color: #2fb4cc;
+                border: 1px solid #2fb4cc;
+                border-radius: 4px;
+                transition: all 400ms ease;
+                margin-bottom: 5px;
+            }
+
+                .card .contenido-card a:hover {
+                    background: #2fb4cc;
+                    color: #fff;
+                }
+
+    @@media only screen and (min-width:320px) and (max-width:768px) {
+        .container-card {
+            flex-wrap: wrap;
+        }
+
+        .card {
+            margin: 15px;
+        }
+    }
+
+    .container #fav {
+        position: Absolute;
+        top: 4%;
+        left: 5%;
+        transform: translate(-30%, -50%);
+        color: white;
+        font-size: 1.4rem;
+        width: 15%;
+        height: 7%
+    }
+
+    img {
+        text-align: center
+    }
+</style>
+
+<script type="text/javascript">
+    var txt_1 = document.getElementById('myFilter');
+    var lb_1 = document.getElementById('lbNombre');
+
+    var btn_1 = document.getElementById('btn-1');
+    var btn_2 = document.getElementById('btnCargar');
+
+    function mostrarBoton1() {
+        txt_1.style.display = 'inline';
+        lb_1.style.display = 'inline';
+
+        btn_2.style.display = 'inline';
+    }
+</script>
+
+<script>
+
+    function myFunction() {
+        var input, filter, cards, cardContainer, title, i;
+        input = document.getElementById("myFilter");
+        filter = input.value.toUpperCase();
+        cardContainer = document.getElementById("pokemons");
+        cards = cardContainer.getElementsByClassName("card");
+        for (i = 0; i < cards.length; i++) {
+            title = cards[i].querySelector(".card-title");
+            if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+                cards[i].style.display = "";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
+
+</script>
